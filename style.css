@@ -1,0 +1,24 @@
+.metric-card{
+  background: linear-gradient(180deg,#0b1220,#050b14);
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 0 25px rgba(34,211,238,.15);
+  transition:.3s;
+}
+.metric-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 0 35px rgba(34,211,238,.25);
+}
+
+.safe{color:#22c55e}
+.marginal{color:#facc15}
+.unsafe{color:#ef4444}
+
+.loader{
+  border:4px solid #0b1220;
+  border-top:4px solid #22d3ee;
+  border-radius:50%;
+  width:48px;height:48px;
+  animation:spin 1s linear infinite;
+}
+@keyframes spin{100%{transform:rotate(360deg)}}
