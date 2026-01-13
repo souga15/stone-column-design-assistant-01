@@ -339,4 +339,5 @@ st.markdown("---")
 st.markdown('<div class="info-card"><b>⚠ Disclaimer</b><br>AI-assisted preliminary design only. '
            'Final design must be verified by qualified engineers using site data and design codes.</div>', unsafe_allow_html=True)
 st.markdown('<div style="text-align:center; opacity:0.7; margin-top:2rem;">Stone Column Design Assistant V6 © 2026<br>'
+
            'FS computed using engineering formulas: σ/P10 with correction factors</div>', unsafe_allow_html=True)
