@@ -4,3 +4,7 @@ numpy
 pandas
 scikit-learn
 pickle-mixin
+fastapi
+uvicorn
+joblib
+pydantic
