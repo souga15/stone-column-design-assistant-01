@@ -116,6 +116,7 @@ def predict_outcomes(model, scaler_X, scaler_y, cu, D, L, sD, Eenc):
     sigma, P10, FS = predict_outcomes(model, scaler_X, scaler_y, cu, D, L, sD, Eenc)
 
 
+
 def compute_FS(sigma, P10, cu, D, L, sD):
     if P10 <= 0 or sigma <= 0:
         return 0.0
@@ -374,4 +375,5 @@ st.markdown('<div class="info-card"><b>⚠ Disclaimer</b><br>AI-assisted prelimi
 st.markdown('<div style="text-align:center; opacity:0.7; margin-top:2rem;">Stone Column Design Assistant V6 © 2026<br>'
 
            'FS computed using engineering formulas: σ/P10 with correction factors</div>', unsafe_allow_html=True)
+
 
