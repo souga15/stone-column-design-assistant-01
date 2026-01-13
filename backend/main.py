@@ -16,31 +16,64 @@ from datetime import datetime
 
 st.set_page_config(page_title="Stone Column Design Assistant V6", page_icon="🗿", layout="wide")
 
-# STYLING
+if os.path.exists("style.css"):
+    with open("style.css") as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+
+# Inline styling (header + layout)
 st.markdown("""
 <style>
-    #MainMenu {visibility: hidden;} footer {visibility: hidden;}
-    .main-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 2.5rem; border-radius: 15px; margin-bottom: 2rem;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        animation: gradient-animation 3s ease infinite; background-size: 200% 200%;
-    }
-    @keyframes gradient-animation {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-    .main-header h1 { color: white; font-size: 2.8rem; font-weight: 700; margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
-    .main-header p { color: rgba(255,255,255,0.95); font-size: 1.2rem; margin-top: 0.5rem; }
-    .stMetric { background: linear-gradient(135deg, #1e2129 0%, #2d3139 100%); padding: 1.5rem;
-        border-radius: 12px; border-left: 4px solid #667eea; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s ease; }
-    .stMetric:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(102,126,234,0.3); }
-    h2, h3 { color: #667eea; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 2px solid rgba(102,126,234,0.3); margin-top: 2rem; }
-    .info-card { background: linear-gradient(135deg, #2d3139 0%, #3d4149 100%); padding: 1.5rem;
-        border-radius: 10px; border-left: 4px solid #764ba2; margin: 1rem 0; }
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+
+/* Main header */
+.main-header {
+    background: linear-gradient(135deg, #22d3ee 0%, #0ea5e9 100%);
+    padding: 2.5rem;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(34,211,238,0.25);
+}
+
+/* Header text */
+.main-header h1 {
+    color: #021018;
+    font-size: 2.6rem;
+    font-weight: 700;
+    margin: 0;
+}
+.main-header p {
+    color: #021018;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+}
+
+/* Metric cards */
+.stMetric {
+    background: linear-gradient(180deg,#0b1220,#050b14);
+    padding: 1.4rem;
+    border-radius: 12px;
+    border-left: 4px solid #22d3ee;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    transition: .3s;
+}
+.stMetric:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(34,211,238,0.35);
+}
+
+/* Info cards */
+.info-card {
+    background: linear-gradient(180deg,#0b1220,#050b14);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 4px solid #0ea5e9;
+    margin: 1rem 0;
+}
 </style>
 """, unsafe_allow_html=True)
+
 
 # LOAD MODEL AND SCALERS
 @st.cache_resource
@@ -79,9 +112,9 @@ def predict_outcomes(model, scaler_X, scaler_y, cu, D, L, sD, Eenc):
     pred_scaled = model.predict(x_scaled, verbose=0)[0]
     pred = scaler_y.inverse_transform(pred_scaled.reshape(1, -1))[0]
     
-    sigma, P10 = pred[0], pred[1]
-    FS = compute_FS(sigma, P10, cu, D, L, sD)
-    return sigma, P10, FS
+    with st.spinner("Analyzing design with AI model..."):
+    sigma, P10, FS = predict_outcomes(model, scaler_X, scaler_y, cu, D, L, sD, Eenc)
+
 
 def compute_FS(sigma, P10, cu, D, L, sD):
     if P10 <= 0 or sigma <= 0:
@@ -341,3 +374,4 @@ st.markdown('<div class="info-card"><b>⚠ Disclaimer</b><br>AI-assisted prelimi
 st.markdown('<div style="text-align:center; opacity:0.7; margin-top:2rem;">Stone Column Design Assistant V6 © 2026<br>'
 
            'FS computed using engineering formulas: σ/P10 with correction factors</div>', unsafe_allow_html=True)
+
